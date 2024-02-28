@@ -5,7 +5,6 @@
 }
 body{
     display:flex;
-    height:100vh;
     justify-content:center;
     align-items:center;
     flex-direction:column;
@@ -15,4 +14,28 @@ body{
     flex-direction:column;
     justify-content:center;
     align-items:center;
+}
+.org-container{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap:10px;
+    margin:20px;
+
+}
+.org-card{
+    display:flex;
+    flex-direction:column;
+    margin:10px;
+    height:300px;
+    width:300px;
+}
+.org-card h1{
+    font-size: 1rem;
+}
+.logo-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    outline:2px solid red;
+    height:100%;
 }
