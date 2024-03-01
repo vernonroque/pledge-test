@@ -3,7 +3,9 @@ const input = document.querySelector('.search');
 const submitBtn = document.querySelectorAll('.submit-button');
 const orgContainer = document.querySelector('.org-container');
 const searchForm = document.querySelector('.search-form');
+const search = document.querySelector('.search');
 let buttonId ='';
+let query = '';
 
 function renderResults(results){
     results.forEach(item =>{
@@ -55,10 +57,25 @@ function handleClick(e){
 }
 const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hey baus');
+    console.log('hey baus. final query is>>>',query);
+    const queryEndpoint = `http://localhost:4001/searchOrg?q=${query}`;
+    fetchInfo(queryEndpoint)
+    setTimeout(()=>{
+        search.value = '';
+
+    },3000)
+}
+
+const handleChange=(e) =>{
+    query = e.target.value;
+    console.log("The searched term is>>>", query);
+    const queryEndpointInt = `http://localhost:4001/searchOrg?q=${query}`;
+    fetchInfo(queryEndpointInt)
+
 }
 
 submitBtn.forEach(button => button.addEventListener('click', handleClick));
 searchForm.addEventListener('submit', handleSubmit);
+search.addEventListener('input',handleChange);
 
 

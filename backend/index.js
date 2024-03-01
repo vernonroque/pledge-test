@@ -39,3 +39,20 @@ app.get('/organizations', async(req,res) => {
         res.status(500).json({ error: 'Internal Server Error' });
       }
 })
+
+app.get('/searchOrg', async(req, res)=>{
+
+  console.log("Search query >>>", req.query.q);
+  try {
+    const response = await axios.get(baseURL+'?'+`q=${req.query.q}`,{
+        headers:myHeader
+    });
+    const data = await response.data;
+    res.status(200).send(data)
+    // res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
+})
