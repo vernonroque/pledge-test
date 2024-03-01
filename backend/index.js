@@ -28,7 +28,7 @@ app.get('/organizations', async(req,res) => {
     console.log("Making API call");
     console.log(req.query.cause_id)
     try {
-        const response = await axios.get(baseURL+'?'+req.query.cause_id,{
+        const response = await axios.get(baseURL+'?'+`cause_id=${req.query.cause_id}`,{
             headers:myHeader
         });
         const data = await response.data;
