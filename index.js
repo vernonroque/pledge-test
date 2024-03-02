@@ -4,8 +4,11 @@ const submitBtn = document.querySelectorAll('.submit-button');
 const orgContainer = document.querySelector('.org-container');
 const searchForm = document.querySelector('.search-form');
 const search = document.querySelector('.search');
+const prevBtn = document.querySelector('.previous-button');
+const nextBtn = document.querySelector('.next-button');
 let buttonId ='';
 let query = '';
+let pgCounter = 0;
 
 function renderResults(results){
     results.forEach(item =>{
@@ -50,11 +53,13 @@ function handleClick(e){
         console.log("same id. exiting");
         return;
     }
+
     buttonId = idNum;
     console.log("the id of button is >>>",idNum);
     const endpoint = `http://localhost:4001/organizations?cause_id=${idNum}`;
     fetchInfo(endpoint)
 }
+
 const handleSubmit = (e) => {
     e.preventDefault();
     console.log('hey baus. final query is>>>',query);
@@ -71,10 +76,32 @@ const handleChange=(e) =>{
     console.log("The searched term is>>>", query);
     const queryEndpointInt = `http://localhost:4001/searchOrg?q=${query}`;
     fetchInfo(queryEndpointInt)
+}
+const handleNext = (e) =>{
+    console.log(e);
+    if(!query){
+        pgCounter++;
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}`;
+        fetchInfo(endpoint);
+    }
+    if(query){
+        pgCounter++;
+        buttonId='';
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}&q=${query}`;
+        fetchInfo(endpoint);
+    }
+    if(buttonId){
+        query='';
+        pgCounter++;
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`; 
+        fetchInfo(endpoint);
+    }
 
 }
 
 submitBtn.forEach(button => button.addEventListener('click', handleClick));
+//prevBtn.addEventListener('click', handlePrev);
+nextBtn.addEventListener('click',handleNext);
 searchForm.addEventListener('submit', handleSubmit);
 search.addEventListener('input',handleChange);
 

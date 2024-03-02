@@ -54,5 +54,27 @@ app.get('/searchOrg', async(req, res)=>{
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-  
+})
+
+app.get('/next', async(req,res)=>{
+  console.log("Im in the next endpoint");
+  // Using template literals
+  let queryString = '';
+  for (const key in req.query) {
+    queryString += `${key}=${req.query[key]}&`;
+  }
+  // Remove the trailing '&' if necessary
+  queryString = queryString.slice(0, -1);
+
+  try {
+    const response = await axios.get(baseURL+'?'+`${queryString}`,{
+        headers:myHeader
+    });
+    const data = await response.data;
+    res.status(200).send(data)
+    // res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 })
