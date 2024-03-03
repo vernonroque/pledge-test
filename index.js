@@ -30,12 +30,11 @@ function fetchInfo(endpoint){
        method:'GET'
    },
    ).then((response)=>{
-       console.log(response);
+    //    console.log(response);
        return response.json();
    }).then((jsonResponse)=>{
     //use .childElementCount to check if a parent container has child elements
         if(orgContainer.childElementCount > 0){
-            console.log("items erased");
             orgContainer.innerHTML = '';
         }
        try{
@@ -49,15 +48,15 @@ function fetchInfo(endpoint){
 
 function handleClick(e){
     const idNum = e.target.id;
-    if (buttonId == idNum){
-        console.log("same id. exiting");
-        return;
-    }
-
-    buttonId = idNum;
-    console.log("the id of button is >>>",idNum);
-    const endpoint = `http://localhost:4001/organizations?cause_id=${idNum}`;
-    fetchInfo(endpoint)
+    pgCounter = 1;
+    // if (buttonId == idNum){
+    //     console.log("same id. exiting");
+    //     return;
+    // }
+        buttonId = idNum;
+        console.log("the id of button is >>>",buttonId);
+        const endpoint = `http://localhost:4001/organizations?cause_id=${idNum}`;
+        fetchInfo(endpoint);
 }
 
 const handleSubmit = (e) => {
@@ -78,21 +77,52 @@ const handleChange=(e) =>{
     fetchInfo(queryEndpointInt)
 }
 const handleNext = (e) =>{
-    console.log(e);
-    if(!query){
-        pgCounter++;
+    pgCounter++;
+    console.log("the counter is now>>>", pgCounter);
+    if(!query && !buttonId){
         const endpoint = `http://localhost:4001/next?page=${pgCounter}`;
         fetchInfo(endpoint);
     }
     if(query){
-        pgCounter++;
+        buttonId='';
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}&q=${query}`;
+        fetchInfo(endpoint);
+    }
+    if(buttonId){
+        console.log("There is a buttonId>>",buttonId);
+        query='';
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`; 
+        fetchInfo(endpoint);
+    }
+
+}
+const handlePrev = (e) => {
+    //console.log(e);
+    if(pgCounter <=0){
+        console.log("number is negative");
+        pgCounter=0;
+        return;
+    }
+    pgCounter--;
+    console.log("the counter is now>>>", pgCounter);
+   
+
+    if(!query && !buttonId){
+        const endpoint = `http://localhost:4001/next?page=${pgCounter}`;
+        fetchInfo(endpoint);
+    }
+    // if(!query && buttonId){
+    //     const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`;
+    //     fetchInfo(endpoint);
+    // }
+
+    if(query){
         buttonId='';
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&q=${query}`;
         fetchInfo(endpoint);
     }
     if(buttonId){
         query='';
-        pgCounter++;
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`; 
         fetchInfo(endpoint);
     }
@@ -100,7 +130,7 @@ const handleNext = (e) =>{
 }
 
 submitBtn.forEach(button => button.addEventListener('click', handleClick));
-//prevBtn.addEventListener('click', handlePrev);
+prevBtn.addEventListener('click', handlePrev);
 nextBtn.addEventListener('click',handleNext);
 searchForm.addEventListener('submit', handleSubmit);
 search.addEventListener('input',handleChange);
