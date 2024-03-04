@@ -11,16 +11,32 @@ let query = '';
 let pgCounter = 0;
 
 function renderResults(results){
+    //console.log("The results>>>",results);
     results.forEach(item =>{
-        const orgCard = document.createElement('div');
-        orgCard.classList.add('org-card')
-        orgCard.innerHTML = `
-        <h1 class="org-name">${item.name}</h1>
-        <div class ="logo-container">
-            <img class = "org-logo" src = "${item.logo_url}" alt = logo />
-        </div>
-        `;
-        orgContainer.appendChild(orgCard)
+        console.log("The item>>>",item.name,item);
+        if(item.name && item.website_url && item.logo_url){
+            const orgCard = document.createElement('div');
+            orgCard.classList.add('org-card')
+            orgCard.innerHTML = `
+            <h1 class="org-name">${item.name}</h1>
+            <div class ="logo-container">
+                <a href = ${item.website_url} target="_blank"><img class = "org-logo" src = "${item.logo_url}" alt = logo width="250" height="250" /></a>
+            </div>
+            `;
+            orgContainer.appendChild(orgCard)
+        }
+        else{
+            const orgCard = document.createElement('div');
+            orgCard.classList.add('org-card')
+            orgCard.innerHTML = `
+            <h1 class="org-name">${item.name}</h1>
+            <div class ="logo-container">
+               <p>logo unavailable</p>
+            </div>
+            `;
+            orgContainer.appendChild(orgCard)
+        }
+       
     })
 }
 
@@ -38,7 +54,7 @@ function fetchInfo(endpoint){
             orgContainer.innerHTML = '';
         }
        try{
-           console.log(jsonResponse);
+           //console.log(jsonResponse);
            renderResults(jsonResponse.results);
        }catch(error){
            console.log("there is an error>>>",error);
@@ -48,6 +64,7 @@ function fetchInfo(endpoint){
 
 function handleClick(e){
     const idNum = e.target.id;
+    query =''
     pgCounter = 1;
     // if (buttonId == idNum){
     //     console.log("same id. exiting");
@@ -61,7 +78,7 @@ function handleClick(e){
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hey baus. final query is>>>',query);
+    //console.log('hey baus. final query is>>>',query);
     const queryEndpoint = `http://localhost:4001/searchOrg?q=${query}`;
     fetchInfo(queryEndpoint)
     setTimeout(()=>{
@@ -72,7 +89,9 @@ const handleSubmit = (e) => {
 
 const handleChange=(e) =>{
     query = e.target.value;
-    console.log("The searched term is>>>", query);
+    buttonId = '';
+    pgCounter = 1;
+    //console.log("The searched term is>>>", query);
     const queryEndpointInt = `http://localhost:4001/searchOrg?q=${query}`;
     fetchInfo(queryEndpointInt)
 }
@@ -84,13 +103,13 @@ const handleNext = (e) =>{
         fetchInfo(endpoint);
     }
     if(query){
-        buttonId='';
+        //buttonId='';
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&q=${query}`;
         fetchInfo(endpoint);
     }
     if(buttonId){
+        //query ='';
         console.log("There is a buttonId>>",buttonId);
-        query='';
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`; 
         fetchInfo(endpoint);
     }
@@ -98,15 +117,16 @@ const handleNext = (e) =>{
 }
 const handlePrev = (e) => {
     //console.log(e);
-    if(pgCounter <=0){
-        console.log("number is negative");
-        pgCounter=0;
+    if(pgCounter ==1){
+        console.log("number is one");
+        pgCounter=1;
         return;
     }
-    pgCounter--;
-    console.log("the counter is now>>>", pgCounter);
-   
-
+    else{
+        pgCounter--;
+        console.log("the counter is now>>>", pgCounter);
+    }
+    
     if(!query && !buttonId){
         const endpoint = `http://localhost:4001/next?page=${pgCounter}`;
         fetchInfo(endpoint);
@@ -117,12 +137,12 @@ const handlePrev = (e) => {
     // }
 
     if(query){
-        buttonId='';
+        //buttonId='';
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&q=${query}`;
         fetchInfo(endpoint);
     }
     if(buttonId){
-        query='';
+        //query='';
         const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`; 
         fetchInfo(endpoint);
     }
