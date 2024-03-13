@@ -11,9 +11,8 @@ let query = '';
 let pgCounter = 0;
 
 function renderResults(results){
-    //console.log("The results>>>",results);
+    console.log("The results>>>",results);
     results.forEach(item =>{
-        console.log("The item>>>",item.name,item);
         if(item.name && item.website_url && item.logo_url){
             const orgCard = document.createElement('div');
             orgCard.classList.add('org-card')
@@ -54,7 +53,7 @@ function fetchInfo(endpoint){
             orgContainer.innerHTML = '';
         }
        try{
-           //console.log(jsonResponse);
+           console.log(jsonResponse);
            renderResults(jsonResponse.results);
        }catch(error){
            console.log("there is an error>>>",error);

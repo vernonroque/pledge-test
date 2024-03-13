@@ -25,8 +25,8 @@ app.get('/', (req,res) => {
 })
 
 app.get('/organizations', async(req,res) => {
-    console.log("Making API call");
-    console.log(req.query.cause_id)
+    //console.log("Making API call");
+    //console.log(req.query.cause_id)
     try {
         const response = await axios.get(baseURL+'?'+`cause_id=${req.query.cause_id}`,{
             headers:myHeader
@@ -42,7 +42,7 @@ app.get('/organizations', async(req,res) => {
 
 app.get('/searchOrg', async(req, res)=>{
 
-  console.log("Search query >>>", req.query.q);
+  //console.log("Search query >>>", req.query.q);
   try {
     const response = await axios.get(baseURL+'?'+`q=${req.query.q}`,{
         headers:myHeader
@@ -57,7 +57,7 @@ app.get('/searchOrg', async(req, res)=>{
 })
 
 app.get('/next', async(req,res)=>{
-  console.log("Im in the next endpoint");
+  //console.log("Im in the next endpoint");
   // Using template literals
   let queryString = '';
   for (const key in req.query) {
