@@ -9,6 +9,7 @@ const nextBtn = document.querySelector('.next-button');
 let buttonId ='';
 let query = '';
 let pgCounter = 0;
+const baseURL = `http://127.0.0.1:5001/pledge-test-aa5d1/us-central1/api`
 
 function renderResults(results){
     console.log("The results>>>",results);
@@ -45,7 +46,7 @@ function fetchInfo(endpoint){
        method:'GET'
    },
    ).then((response)=>{
-    //    console.log(response);
+        console.log(response);
        return response.json();
    }).then((jsonResponse)=>{
     //use .childElementCount to check if a parent container has child elements
@@ -71,14 +72,14 @@ function handleClick(e){
     // }
         buttonId = idNum;
         console.log("the id of button is >>>",buttonId);
-        const endpoint = `http://localhost:4001/organizations?cause_id=${idNum}`;
+        const endpoint = `${baseURL}/organizations?cause_id=${idNum}`;
         fetchInfo(endpoint);
 }
 
 const handleSubmit = (e) => {
     e.preventDefault();
     //console.log('hey baus. final query is>>>',query);
-    const queryEndpoint = `http://localhost:4001/searchOrg?q=${query}`;
+    const queryEndpoint = `${baseURL}/searchOrg?q=${query}`;
     fetchInfo(queryEndpoint)
     setTimeout(()=>{
         search.value = '';
@@ -91,7 +92,7 @@ const handleChange=(e) =>{
     buttonId = '';
     pgCounter = 1;
     //console.log("The searched term is>>>", query);
-    const queryEndpointInt = `http://localhost:4001/searchOrg?q=${query}`;
+    const queryEndpointInt = `${baseURL}/searchOrg?q=${query}`;
     fetchInfo(queryEndpointInt)
 }
 const handleNext = (e) =>{

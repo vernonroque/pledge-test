@@ -1,4 +1,5 @@
 const express = require('express');
+const functions = require("firebase-functions");
 require('dotenv').config()
 const PORT = process.env.PORT || 4001;
 const cors = require('cors');
@@ -10,14 +11,14 @@ const myHeader = {
 
 // Instantiate the app here
 const app = express(); 
-app.use(cors());
+app.use(cors({origin: true}));
 
 // Use static server to serve the Express Yourself Website
 //app.use(express.static('public'));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 app.get('/', (req,res) => {
     console.log("Hello World");
@@ -78,3 +79,6 @@ app.get('/next', async(req,res)=>{
     res.status(500).json({ error: 'Internal Server Error' });
   }
 })
+
+// Listen command
+exports.api = functions.https.onRequest(app);
