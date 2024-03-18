@@ -72,7 +72,6 @@ app.get("/searchOrg", async (req, res)=> {
     });
     const data = await response.data;
     res.status(200).send(data);
-    // res.json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "Internal Server Error"});
