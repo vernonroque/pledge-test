@@ -33,7 +33,7 @@ const myHeader = {
 
 // Instantiate the app here
 const app = express();
-app.use(cors());
+app.use(cors({origin: true}));
 
 // Use static server to serve the Express Yourself Website
 // app.use(express.static('public'));
@@ -47,6 +47,11 @@ app.get("/", (req, res) => {
   res.status(200).send("baus");
 });
 
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
+
 app.get("/organizations", async (req, res) => {
   console.log("Making API call");
   console.log(req.query.cause_id);
@@ -56,6 +61,7 @@ app.get("/organizations", async (req, res) => {
       headers: myHeader,
     });
     const data = await response.data;
+    console.log(data);
     res.status(200).send(data);
     // res.json(data);
   } catch (error) {

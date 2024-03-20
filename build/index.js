@@ -78,83 +78,81 @@ function handleClick(e){
         fetchInfo(endpoint);
 }
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    //console.log('hey baus. final query is>>>',query);
-    const queryEndpoint = `${baseURL}/searchOrg?q=${query}`;
-    fetchInfo(queryEndpoint)
-    setTimeout(()=>{
-        search.value = '';
+// const handleSubmit = (e) => {
+//     e.preventDefault();
+//     //console.log('hey baus. final query is>>>',query);
+//     const queryEndpoint = `${baseURL}/searchOrg?q=${query}`;
+//     fetchInfo(queryEndpoint)
+//     setTimeout(()=>{
+//         search.value = '';
 
-    },3000)
-}
+//     },3000)
+// }
 
-const handleChange=(e) =>{
-    query = e.target.value;
-    buttonId = '';
-    pgCounter = 1;
-    //console.log("The searched term is>>>", query);
-    const queryEndpointInt = `${baseURL}/searchOrg?q=${query}`;
-    fetchInfo(queryEndpointInt)
-}
-const handleNext = (e) =>{
-    pgCounter++;
-    console.log("the counter is now>>>", pgCounter);
-    if(!query && !buttonId){
-        const endpoint = `${baseURL}/next?page=${pgCounter}`;
-        fetchInfo(endpoint);
-    }
-    if(query){
-        //buttonId='';
-        const endpoint = `${baseURL}/next?page=${pgCounter}&q=${query}`;
-        fetchInfo(endpoint);
-    }
-    if(buttonId){
-        //query ='';
-        console.log("There is a buttonId>>",buttonId);
-        const endpoint = `${baseURL}/next?page=${pgCounter}&cause_id=${buttonId}`; 
-        fetchInfo(endpoint);
-    }
+// const handleChange=(e) =>{
+//     e.preventDefault();
+//     query = e.target.value;
+//     buttonId = '';
+//     pgCounter = 1;
+//     //console.log("The searched term is>>>", query);
+//     const queryEndpointInt = `${baseURL}/searchOrg?q=${query}`;
+//     fetchInfo(queryEndpointInt)
+// }
+// const handleNext = (e) =>{
+//     pgCounter++;
+//     console.log("the counter is now>>>", pgCounter);
+//     if(!query && !buttonId){
+//         const endpoint = `${baseURL}/next?page=${pgCounter}`;
+//         fetchInfo(endpoint);
+//     }
+//     if(query){
+//         //buttonId='';
+//         const endpoint = `${baseURL}/next?page=${pgCounter}&q=${query}`;
+//         fetchInfo(endpoint);
+//     }
+//     if(buttonId){
+//         //query ='';
+//         console.log("There is a buttonId>>",buttonId);
+//         const endpoint = `${baseURL}/next?page=${pgCounter}&cause_id=${buttonId}`; 
+//         fetchInfo(endpoint);
+//     }
 
-}
-const handlePrev = (e) => {
-    //console.log(e);
-    if(pgCounter ==1){
-        console.log("number is one");
-        pgCounter=1;
-        return;
-    }
-    else{
-        pgCounter--;
-        console.log("the counter is now>>>", pgCounter);
-    }
+// }
+
+// const handlePrev = (e) => {
+//     //console.log(e);
+//     if(pgCounter ==1){
+//         console.log("number is one");
+//         pgCounter=1;
+//         return;
+//     }
+//     else{
+//         pgCounter--;
+//         console.log("the counter is now>>>", pgCounter);
+//     }
     
-    if(!query && !buttonId){
-        const endpoint = `${baseURL}/next?page=${pgCounter}`;
-        fetchInfo(endpoint);
-    }
-    // if(!query && buttonId){
-    //     const endpoint = `http://localhost:4001/next?page=${pgCounter}&cause_id=${buttonId}`;
-    //     fetchInfo(endpoint);
-    // }
+//     if(!query && !buttonId){
+//         const endpoint = `${baseURL}/next?page=${pgCounter}`;
+//         fetchInfo(endpoint);
+//     }
+   
+//     if(query){
+//         //buttonId='';
+//         const endpoint = `${baseURL}/next?page=${pgCounter}&q=${query}`;
+//         fetchInfo(endpoint);
+//     }
+//     if(buttonId){
+//         //query='';
+//         const endpoint = `${baseURL}/next?page=${pgCounter}&cause_id=${buttonId}`; 
+//         fetchInfo(endpoint);
+//     }
 
-    if(query){
-        //buttonId='';
-        const endpoint = `${baseURL}/next?page=${pgCounter}&q=${query}`;
-        fetchInfo(endpoint);
-    }
-    if(buttonId){
-        //query='';
-        const endpoint = `${baseURL}/next?page=${pgCounter}&cause_id=${buttonId}`; 
-        fetchInfo(endpoint);
-    }
-
-}
+// }
 
 submitBtn.forEach(button => button.addEventListener('click', handleClick));
-prevBtn.addEventListener('click', handlePrev);
-nextBtn.addEventListener('click',handleNext);
-searchForm.addEventListener('submit', handleSubmit);
-search.addEventListener('input',handleChange);
+//prevBtn.addEventListener('click', handlePrev);
+//nextBtn.addEventListener('click',handleNext);
+//searchForm.addEventListener('submit', handleSubmit);
+//search.addEventListener('input',handleChange);
 
 
