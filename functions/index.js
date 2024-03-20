@@ -84,7 +84,7 @@ app.get("/searchOrg", async (req, res)=> {
 });
 
 app.get("/next", async (req, res)=>{
-  // console.log("Im in the next endpoint");
+  console.log("Im in the next endpoint");
   // Using template literals
   let queryString = " ";
   // eslint-disable-next-line guard-for-in

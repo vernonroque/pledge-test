@@ -100,6 +100,7 @@ const handleChange=(e) =>{
 }
 
 const handleNext = (e) =>{
+    e.preventDefault();
     pgCounter++;
     console.log("the counter is now>>>", pgCounter);
     if(!query && !buttonId){
@@ -122,6 +123,7 @@ const handleNext = (e) =>{
 
 const handlePrev = (e) => {
     //console.log(e);
+    e.preventDefault();
     if(pgCounter ==1){
         console.log("number is one");
         pgCounter=1;
