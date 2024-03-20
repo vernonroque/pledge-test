@@ -61,7 +61,6 @@ app.get("/organizations", async (req, res) => {
       headers: myHeader,
     });
     const data = await response.data;
-    console.log(data);
     res.status(200).send(data);
     // res.json(data);
   } catch (error) {
