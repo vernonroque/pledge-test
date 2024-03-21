@@ -93,12 +93,13 @@ app.get("/next", async (req, res)=>{
   }
   // Remove the trailing '&' if necessary
   queryString = queryString.slice(0, -1);
-
+  console.log("the query string", queryString);
   try {
     const response = await axios.get(baseURL+"?"+`${queryString}`, {
       headers: myHeader,
     });
     const data = await response.data;
+    console.log("The data from next>>>", data);
     res.status(200).send(data);
     // res.json(data);
   } catch (error) {
