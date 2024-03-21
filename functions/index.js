@@ -86,7 +86,7 @@ app.get("/searchOrg", async (req, res)=> {
 app.get("/next", async (req, res)=>{
   console.log("Im in the next endpoint");
   // Using template literals
-  let queryString = " ";
+  let queryString = "";
   // eslint-disable-next-line guard-for-in
   for (const key in req.query) {
     queryString += `${key}=${req.query[key]}&`;
@@ -99,7 +99,6 @@ app.get("/next", async (req, res)=>{
       headers: myHeader,
     });
     const data = await response.data;
-    console.log("The data from next>>>", data);
     res.status(200).send(data);
     // res.json(data);
   } catch (error) {
