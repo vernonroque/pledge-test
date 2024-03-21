@@ -9,7 +9,8 @@ const nextBtn = document.querySelector('.next-button');
 let buttonId ='';
 let query = '';
 let pgCounter = 0;
-const baseURL = 'http://127.0.0.1:5001/pledge-test-aa5d1/us-central1/api'
+//const baseURL = 'http://127.0.0.1:5001/pledge-test-aa5d1/us-central1/api' <--use this for testing
+const baseURL = 'https://us-central1-pledge-test-aa5d1.cloudfunctions.net/api';
 
 function renderResults(results){
     console.log("The results>>>",results);
